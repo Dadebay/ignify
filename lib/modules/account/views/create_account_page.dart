@@ -76,6 +76,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   ),
                   SizedBox(height: 20),
                   _AccountCard(
+                    label: 'Teacher',
+                    value: 'teacher',
+                    icon: IconConstants.userCircle,
+                    selected: _selected == 'teacher',
+                    onTap: () => setState(() => _selected = 'teacher'),
+                  ),
+                  SizedBox(height: 20),
+                  _AccountCard(
                     label: 'Business owner',
                     value: 'business',
                     icon: IconConstants.school,

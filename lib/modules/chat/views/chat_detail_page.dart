@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import '../models/chat_model.dart';
 import '../widgets/message_bubble.dart';
 import '../widgets/quick_reply_button.dart';
@@ -86,8 +87,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        leadingWidth: 50,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0).copyWith(right: 0),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey[100],
@@ -103,7 +105,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         title: Row(
           children: [
             CircleAvatar(
-              radius: 25,
+              radius: 20,
               backgroundColor: Colors.grey[300],
               backgroundImage:
                   widget.chat.avatarUrl != null ? (widget.chat.avatarUrl!.startsWith('http') ? NetworkImage(widget.chat.avatarUrl!) : AssetImage(widget.chat.avatarUrl!) as ImageProvider) : null,
@@ -118,7 +120,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     )
                   : null,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,6 +147,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           ],
         ),
         actions: [
+          IconButton(
+            icon: Icon(IconlyLight.call, color: Colors.black),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(IconlyLight.video, color: Colors.black),
+            onPressed: () {},
+          ),
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.black),
             onPressed: () {},

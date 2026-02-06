@@ -12,7 +12,7 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 50, top: 4, bottom: 4),
+      padding: EdgeInsets.only(left: 16, right: message.isSent ? 16 : 70, top: 4, bottom: 4),
       child: Row(
         mainAxisAlignment: message.isSent ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

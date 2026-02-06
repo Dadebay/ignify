@@ -88,26 +88,27 @@ class WeekCalendarHeader extends StatelessWidget {
                                 color: isSelected ? Colors.white : Colors.black87,
                               ),
                             ),
-                            if (dayEvents.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: dayEvents.take(3).map((event) {
-                                    return Container(
-                                      margin: const EdgeInsets.symmetric(horizontal: 1.5),
-                                      width: 5,
-                                      height: 5,
-                                      decoration: BoxDecoration(
-                                        color: event.personColor,
-                                        shape: BoxShape.circle,
-                                        border: isSelected ? Border.all(color: Colors.white, width: 1) : null,
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: dayEvents.isNotEmpty
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: dayEvents.take(3).map((event) {
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(horizontal: 1.5),
+                                          width: 5,
+                                          height: 5,
+                                          decoration: BoxDecoration(
+                                            color: event.personColor,
+                                            shape: BoxShape.circle,
+                                            border: isSelected ? Border.all(color: Colors.white, width: 1) : null,
+                                          ),
+                                        );
+                                      }).toList(),
+                                    )
+                                  : const SizedBox(height: 5),
+                            ),
                           ],
                         ),
                       ),

@@ -25,8 +25,8 @@ class CalendarEventCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(
                 event.imageUrl,
-                width: 56,
-                height: 56,
+                width: 90,
+                height: 90,
                 fit: BoxFit.cover,
               ),
             ),

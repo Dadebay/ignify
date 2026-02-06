@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:iconly/iconly.dart';
 import 'package:makc/core/constants/icon_constants.dart';
 import 'package:makc/core/constants/image_constants.dart';
 
@@ -75,6 +77,7 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   String _selectedTab = 'Activity places'; // 'Activity places' or 'Your community'
   String _selectedFilter = 'All';
+  String _searchQuery = '';
 
   final List<FeaturedPlace> _featuredPlaces = [
     FeaturedPlace(
@@ -192,24 +195,27 @@ class _ExplorePageState extends State<ExplorePage> {
             SliverPersistentHeader(
               pinned: true,
               delegate: _TabHeaderDelegate(
-                child: Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: SizedBox(
+                  height: 70,
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF5F5F5),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.all(4),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: _buildTabButton('Activity places'),
-                        ),
-                        Expanded(
-                          child: _buildTabButton('Your community'),
-                        ),
-                      ],
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF5F5F5),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: _buildTabButton('Activity places'),
+                          ),
+                          Expanded(
+                            child: _buildTabButton('Your community'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -261,9 +267,40 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   Widget _buildActivityPlacesView() {
+    final query = _searchQuery.trim().toLowerCase();
+    final filteredActivities =
+        query.isEmpty ? _allActivities : _allActivities.where((activity) => activity.name.toLowerCase().contains(query) || activity.category.toLowerCase().contains(query)).toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Search
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: TextField(
+            onChanged: (value) => setState(() => _searchQuery = value),
+            decoration: InputDecoration(
+              hintText: 'Search',
+              prefixIcon: Icon(IconlyLight.search, color: Colors.grey[400]),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey.shade200),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         // AI Suggestion Banner
         Container(
           width: double.infinity,
@@ -374,7 +411,7 @@ class _ExplorePageState extends State<ExplorePage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            children: _allActivities.map((activity) {
+            children: filteredActivities.map((activity) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: _buildActivityCard(activity),
@@ -802,10 +839,10 @@ class _TabHeaderDelegate extends SliverPersistentHeaderDelegate {
   _TabHeaderDelegate({required this.child});
 
   @override
-  double get minExtent => 72;
+  double get minExtent => 70;
 
   @override
-  double get maxExtent => 72;
+  double get maxExtent => 70;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {

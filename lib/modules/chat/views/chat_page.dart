@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconly/iconly.dart';
 import '../models/chat_model.dart';
 import '../widgets/chat_item.dart';
 import 'chat_detail_page.dart';
@@ -77,15 +78,46 @@ class ChatPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: chats.length,
-        itemBuilder: (context, index) {
-          final chat = chats[index];
-          return ChatItem(
-            chat: chat,
-            onTap: () => Get.to(() => ChatDetailPage(chat: chat)),
-          );
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: TextField(
+              onChanged: (value) {},
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: Icon(IconlyLight.search, color: Colors.grey[400]),
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: chats.length,
+              itemBuilder: (context, index) {
+                final chat = chats[index];
+                return ChatItem(
+                  chat: chat,
+                  onTap: () => Get.to(() => ChatDetailPage(chat: chat)),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

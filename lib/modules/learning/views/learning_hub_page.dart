@@ -7,6 +7,8 @@ import '../widgets/course_card.dart';
 import '../widgets/studio_card.dart';
 import '../widgets/studio_card.dart';
 import 'course_detail_page.dart';
+import 'package:makc/modules/calendar/models/calendar_event_model.dart';
+import 'package:makc/modules/calendar/views/calendar_event_detail_page.dart';
 
 class LearningHubPage extends StatelessWidget {
   const LearningHubPage({super.key});
@@ -183,7 +185,14 @@ class LearningHubPage extends StatelessWidget {
                     return StudioCard(
                       studio: studio,
                       onTap: () {
-                        // Navigate to studio detail
+                        showModalBottomSheet<void>(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) {
+                            return CalendarEventDetailPage(event: _studioToEvent(studio));
+                          },
+                        );
                       },
                     );
                   }).toList(),
@@ -195,6 +204,22 @@ class LearningHubPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  CalendarEvent _studioToEvent(Studio studio) {
+    final start = DateTime.now();
+    final end = start.add(const Duration(minutes: 90));
+    return CalendarEvent(
+      id: studio.id,
+      title: studio.name,
+      startTime: start,
+      endTime: end,
+      location: studio.type,
+      imageUrl: 'assets/images/featured_1.png',
+      personName: 'Studio',
+      personColor: const Color(0xFF2196F3),
+      hasReports: false,
     );
   }
 }
